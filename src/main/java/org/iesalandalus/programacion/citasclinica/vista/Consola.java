@@ -17,7 +17,7 @@ public class Consola {
 	}
 
 	public static void mostrarMenu() {
-		System.out.println("Menú");
+		System.out.println("MenÃº");
 		System.out.println("_________________________");
 		System.out.println("");
 		System.out.println("1 - Insertar cita.");
@@ -31,43 +31,30 @@ public class Consola {
 	public static Opciones elegirOpcion() {
 		Opciones[] opcion = Opciones.values();
 		System.out.println("");
-		System.out.println("Escoge una opción");
+		System.out.println("Escoge una opciÃ³n");
 		int opcionElegida = Entrada.entero();
 		while (opcionElegida < 0 || opcionElegida > 5) {
-			System.out.println("Esta opción no se encuentra disponible. Por favor, escoge una opción entre 0 y 5:");
+			System.out.println("Esta opciÃ³n no se encuentra disponible. Por favor, escoge una opciÃ³n entre 0 y 5:");
 			opcionElegida = Entrada.entero();
 		}
 		return opcion[opcionElegida];
 	}
 
-	public static Paciente leerPaciente() throws OperationNotSupportedException {
-		Paciente paciente;
+	public static Paciente leerPaciente() {
+		Paciente paciente = null;
 		System.out.println("");
 		System.out.println("Introduzca el nombre:");
 		String nombre = Entrada.cadena();
-		System.out.println("Introduzca el teléfono:");
+		System.out.println("Introduzca el telÃ©fono:");
 		String telefono = Entrada.cadena();
 		System.out.println("Introduzca el DNI:");
 		String dni = Entrada.cadena();
-		paciente = new Paciente(nombre, dni, telefono);
-		return paciente;
-	}
-
-	public static LocalDateTime leerFechaHora() {
-		String formatoCadena = "dd/MM/yyyy HH:mm";
-		DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern(formatoCadena);
-		LocalDateTime fechaHora = null;
 		try {
-			System.out.println("Introduzca una fecha y hora con el siguiente formato: dd/MM/aaaa HH:mm:");
-			fechaHora = LocalDateTime.parse(Entrada.cadena(), formatoFecha);
-		} catch (DateTimeParseException e) {
+			paciente = new Paciente(nombre, dni, telefono);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
-		return fechaHora;
-	}
-
-	public static Cita leerCita() throws OperationNotSupportedException {
-		Cita cita = new Cita(leerPaciente(), leerFechaHora());
-		return cita;
+		return paciente;
 	}
 
 	public static LocalDate leerFecha() {
@@ -85,5 +72,25 @@ public class Consola {
 			}
 		} while (!fechaValida);
 		return fecha;
+	}
+
+	public static LocalDateTime leerFechaHora() {
+		String formatoCadena = "dd/MM/yyyy HH:mm";
+		DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern(formatoCadena);
+		LocalDateTime fechaHora = null;
+		boolean fechaValida = true;
+		do {
+			try {
+				System.out.println("Introduzca una fecha y hora con el siguiente formato: dd/MM/aaaa HH:mm");
+				fechaHora = LocalDateTime.parse(Entrada.cadena(), formatoFecha);
+			} catch (DateTimeParseException e) {
+			}
+		} while (!fechaValida);
+		return fechaHora;
+	}
+
+	public static Cita leerCita() throws OperationNotSupportedException {
+		Cita cita = new Cita(leerPaciente(), leerFechaHora());
+		return cita;
 	}
 }

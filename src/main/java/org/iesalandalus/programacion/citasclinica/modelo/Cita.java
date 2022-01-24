@@ -36,7 +36,7 @@ public class Cita {
 	}
 
 	public Paciente getPaciente() {
-		return paciente;
+		return new Paciente(paciente);
 	}
 
 	private void setPaciente(Paciente paciente) {

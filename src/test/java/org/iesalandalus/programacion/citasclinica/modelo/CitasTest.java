@@ -35,7 +35,7 @@ public class CitasTest {
 	private static final String TAMANO_NO_ESPERADO = "El tamaño devuelto no es el esperado.";
 	private static final String CITA_NO_ESPERADA = "La cita devuelta no es la que debería ser.";
 	private static final String OBJETO_DEBERIA_SER_NULO = "No se debería haber creado el objeto.";
-	
+
 	private static Paciente paciente1;
 	private static Paciente paciente2;
 	private static Paciente paciente3;
@@ -46,7 +46,7 @@ public class CitasTest {
 	private static Cita cita2;
 	private static Cita cita3;
 	private static Cita citaRepetida1;
-	
+
 	@BeforeClass
 	public static void asignarValoresAtributos() {
 		paciente1 = new Paciente("José Ramón Jiménez Reyes", "11223344B", "950112233");
@@ -60,7 +60,7 @@ public class CitasTest {
 		cita3 = new Cita(paciente3, fechaHora3);
 		citaRepetida1 = new Cita(paciente2, fechaHora1);
 	}
-	
+
 	@Test
 	public void constructorCapacidadValidaCreaCitasCorrectamente() {
 		Citas citas = new Citas(5);
@@ -68,7 +68,7 @@ public class CitasTest {
 		assertThat(CITAS_NO_CREADAS, citas.getCapacidad(), is(5));
 		assertThat(TAMANO_NO_ESPERADO, citas.getTamano(), is(0));
 	}
-	
+
 	@Test
 	public void constructorCapacidadNoValidaLanzaExcepcion() {
 		Citas citas = null;
@@ -91,7 +91,7 @@ public class CitasTest {
 			fail(TIPO_NO_CORRECTO);
 		}
 	}
-	
+
 	@Test
 	public void insertarCitaValidaConCitasVaciasInsertaCitaCorrectamente() {
 		Citas citas = new Citas(5);
@@ -105,25 +105,21 @@ public class CitasTest {
 			fail(EXCEPCION_NO_PROCEDE);
 		}
 	}
-	
+
 	@Test
-	public void insertarDosCitasValidasInsertaCitasCorrectamente() {
+	public void insertarDosCitasValidasInsertaCitasCorrectamente() throws OperationNotSupportedException {
 		Citas citas = new Citas(5);
-		try {
-			citas.insertar(cita1);
-			citas.insertar(cita2);
-			assertThat(TAMANO_NO_ESPERADO, citas.getTamano(), is(2));
-			assertThat(CITA_NO_ESPERADA, citas.buscar(cita1), is(cita1));
-			assertThat(REFERENCIA_NO_ESPERADA, citas.buscar(cita1), not(sameInstance(cita1)));
-			assertThat(OPERACION_NO_REALIZADA, citas.getCitas()[0], is(cita1));
-			assertThat(CITA_NO_ESPERADA, citas.buscar(cita2), is(cita2));
-			assertThat(REFERENCIA_NO_ESPERADA, citas.buscar(cita2), not(sameInstance(cita2)));
-			assertThat(OPERACION_NO_REALIZADA, citas.getCitas()[1], is(cita2));
-		} catch (OperationNotSupportedException e) {
-			fail(EXCEPCION_NO_PROCEDE);
-		}
+		citas.insertar(cita1);
+		citas.insertar(cita2);
+		assertThat(TAMANO_NO_ESPERADO, citas.getTamano(), is(2));
+		assertThat(CITA_NO_ESPERADA, citas.buscar(cita1), is(cita1));
+		assertThat(REFERENCIA_NO_ESPERADA, citas.buscar(cita1), not(sameInstance(cita1)));
+		assertThat(OPERACION_NO_REALIZADA, citas.getCitas()[0], is(cita1));
+		assertThat(CITA_NO_ESPERADA, citas.buscar(cita2), is(cita2));
+		assertThat(REFERENCIA_NO_ESPERADA, citas.buscar(cita2), not(sameInstance(cita2)));
+		assertThat(OPERACION_NO_REALIZADA, citas.getCitas()[1], is(cita2));
 	}
-	
+
 	@Test
 	public void insertarTresCitasValidasInsertaCitasCorrectamente() {
 		Citas citas = new Citas(5);
@@ -145,7 +141,7 @@ public class CitasTest {
 			fail(EXCEPCION_NO_PROCEDE);
 		}
 	}
-	
+
 	@Test
 	public void insertarCitaNulaLanzaExcepcion() {
 		Citas citas = new Citas(5);
@@ -159,7 +155,7 @@ public class CitasTest {
 			fail(TIPO_NO_CORRECTO);
 		}
 	}
-	
+
 	@Test
 	public void insertarCitaRepetidaLanzaExcepcion() {
 		Citas citas = new Citas(5);
@@ -202,7 +198,7 @@ public class CitasTest {
 			fail(TIPO_NO_CORRECTO);
 		}
 	}
-	
+
 	@Test
 	public void insertarCitaValidaConCitasLlenasLanzaExcepcion() {
 		Citas citas = new Citas(2);
@@ -223,7 +219,7 @@ public class CitasTest {
 			fail(TIPO_NO_CORRECTO);
 		}
 	}
-	
+
 	@Test
 	public void borrarCitaExistenteBorraCitaCorrectamente() throws OperationNotSupportedException {
 		Citas citas = new Citas(5);
@@ -297,7 +293,7 @@ public class CitasTest {
 			fail(EXCEPCION_NO_PROCEDE);
 		}
 	}
-	
+
 	@Test
 	public void borrarCitaNoExistenteLanzaExcepcion() {
 		Citas citas = new Citas(5);
@@ -324,7 +320,7 @@ public class CitasTest {
 			fail(TIPO_NO_CORRECTO);
 		}
 	}
-	
+
 	@Test
 	public void borrarCitaNulaLanzaExcepcion() {
 		Citas citas = new Citas(5);
@@ -339,7 +335,7 @@ public class CitasTest {
 			fail(TIPO_NO_CORRECTO);
 		}
 	}
-	
+
 	@Test
 	public void getCitasDiaValidoDevuelveLasCitasDeEseDia() {
 		Citas citas = new Citas(5);
@@ -359,7 +355,7 @@ public class CitasTest {
 		assertThat(TAMANO_NO_ESPERADO, citasDia[1], is(nullValue()));
 		assertThat(TAMANO_NO_ESPERADO, citasDia[2], is(nullValue()));
 	}
-	
+
 	@Test
 	public void getCitasDiaNuloLanzaExcepcion() {
 		Citas citas = new Citas(5);

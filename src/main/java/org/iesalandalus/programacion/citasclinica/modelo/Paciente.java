@@ -50,7 +50,6 @@ public class Paciente {
 
 		if (comparador.matches()) {
 			int numeroDni = Integer.parseInt(comparador.group(1));
-			String letraDni = comparador.group(2);
 			String[] letraValida = { "T", "R", "W", "A", "G", "M", "Y", "F", "P", "D", "X", "B", "N", "J", "Z", "S",
 					"Q", "V", "H", "L", "C", "K", "E" };
 			if (comparador.group(2).equals(letraValida[numeroDni % 23])) {
@@ -66,7 +65,7 @@ public class Paciente {
 
 	public void setNombre(String nombre) {
 		if (nombre == null || nombre.trim().isEmpty()) {
-			throw new NullPointerException("ERROR: El nombre de un paciente no puede ser nulo o vacÌo.");
+			throw new NullPointerException("ERROR: El nombre de un paciente no puede ser nulo o vac√≠o.");
 		} else {
 			this.nombre = formateaNombre(nombre);
 		}
@@ -78,11 +77,11 @@ public class Paciente {
 
 	public void setTelefono(String telefono) {
 		if (telefono == null || telefono.trim().isEmpty()) {
-			throw new NullPointerException("ERROR: El telÈfono de un paciente no puede ser nulo o vacÌo.");
+			throw new NullPointerException("ERROR: El tel√©fono de un paciente no puede ser nulo o vac√≠o.");
 		} else if (telefono.matches(ER_TELEFONO)) {
 			this.telefono = telefono;
 		} else {
-			throw new IllegalArgumentException("ERROR: El telÈfono no tiene un formato v·lido.");
+			throw new IllegalArgumentException("ERROR: El tel√©fono no tiene un formato v√°lido.");
 		}
 	}
 
@@ -92,18 +91,13 @@ public class Paciente {
 
 	private void setDni(String dni) {
 		if (dni == null || dni.trim().isEmpty()) {
-			throw new NullPointerException("ERROR: El dni de un paciente no puede ser nulo o vacÌo.");
-		} else {
-			if (!dni.matches(ER_DNI)) {
-				throw new IllegalArgumentException("ERROR: El dni no tiene un formato v·lido.");
-			} else {
-				if (!comprobarLetraDni(dni)) {
-					throw new IllegalArgumentException("ERROR: El dni no es correcto.");
-				} else {
-					this.dni = dni;
-				}
-			}
+			throw new NullPointerException("ERROR: El DNI de un paciente no puede ser nulo o vac√≠o.");
+		} else if (!dni.matches(ER_DNI)) {
+			throw new IllegalArgumentException("ERROR: El DNI no tiene un formato v√°lido.");
+		} else if (!comprobarLetraDni(dni)) {
+			throw new IllegalArgumentException("ERROR: La letra del DNI no es correcta.");
 		}
+		this.dni = dni;
 	}
 
 	@Override
@@ -134,7 +128,7 @@ public class Paciente {
 
 	@Override
 	public String toString() {
-		return String.format("nombre=%s (%s), DNI=%s, telÈfono=%s", getNombre(), getIniciales(), getDni(),
+		return String.format("nombre=%s (%s), DNI=%s, tel√©fono=%s", getNombre(), getIniciales(), getDni(),
 				getTelefono());
 	}
 }

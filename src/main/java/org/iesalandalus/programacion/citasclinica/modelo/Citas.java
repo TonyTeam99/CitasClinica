@@ -1,6 +1,7 @@
 package org.iesalandalus.programacion.citasclinica.modelo;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 import javax.naming.OperationNotSupportedException;
 
@@ -13,29 +14,25 @@ public class Citas {
 		if (capacidadColeccion <= 0) {
 			throw new IllegalArgumentException("ERROR: La capacidad debe ser mayor que cero.");
 		}
-		coleccionCitas = new Cita[capacidadColeccion];
 		this.capacidad = capacidadColeccion;
-		tamano = 0;
+		coleccionCitas = new Cita[capacidadColeccion];
+		this.tamano = 0;
 	}
 
 	public int getCapacidad() {
-		return capacidad;
+		return this.capacidad;
 	}
 
 	public int getTamano() {
-		return tamano;
+		return this.tamano;
 	}
 
 	private boolean tamanoSuperado(int indice) {
-		boolean tamanoSuperado;
-		tamanoSuperado = (indice >= tamano);
-		return tamanoSuperado;
+		return indice >= tamano;
 	}
 
 	private boolean capacidadSuperada(int indice) {
-		boolean capacidadSuperada;
-		capacidadSuperada = (indice >= tamano);
-		return capacidadSuperada;
+		return indice >= capacidad;
 	}
 
 	private int buscarIndice(Cita cita) {
@@ -57,30 +54,34 @@ public class Citas {
 		}
 		int indice = buscarIndice(cita);
 		if (capacidadSuperada(indice)) {
-			throw new OperationNotSupportedException("ERROR: No se aceptan m·s citas.");
-		}
-		if (tamanoSuperado(indice)) {
-			coleccionCitas[indice] = new Cita(cita);
-			tamano++;
-		} else {
+			throw new OperationNotSupportedException("ERROR: No se aceptan m√°s citas.");
+		} else if (!tamanoSuperado(indice)) {
 			throw new OperationNotSupportedException("ERROR: Ya existe una cita para esa fecha y hora.");
+		} else {
+			coleccionCitas[indice] = new Cita(cita);
+			this.tamano++;
 		}
 	}
 
 	public Cita buscar(Cita cita) {
+		if (cita == null) {
+			throw new NullPointerException("ERROR: No se puede buscar una cita nula.");
+		}
 		int indice = buscarIndice(cita);
 		if (tamanoSuperado(indice)) {
 			return null;
 		} else {
-			return new Cita(cita);
+			return new Cita(coleccionCitas[indice]);
 		}
 	}
 
 	private void desplazarUnaPosicionHaciaIzquierda(int indice) {
 		{
-			for (int i = indice; !tamanoSuperado(i); i++) {
+			int i;
+			for (i = indice; !tamanoSuperado(i); i++) {
 				coleccionCitas[i] = coleccionCitas[i + 1];
 			}
+			coleccionCitas[i] = null;
 			tamano--;
 		}
 	}
@@ -89,21 +90,22 @@ public class Citas {
 		if (cita == null) {
 			throw new IllegalArgumentException("ERROR: No se puede borrar una cita nula.");
 		}
-		int indice = buscarIndice(cita);
-		if (!tamanoSuperado(indice)) {
-			desplazarUnaPosicionHaciaIzquierda(indice);
-		} else {
+		if (tamanoSuperado(buscarIndice(cita))) {
 			throw new OperationNotSupportedException("ERROR: No existe ninguna cita para esa fecha y hora.");
+		} else {
+			desplazarUnaPosicionHaciaIzquierda(buscarIndice(cita));
 		}
 	}
 
 	public Cita[] getCitas() {
-		return coleccionCitas;
+		Cita[] copiaColeccionCitas;
+		copiaColeccionCitas = Arrays.copyOf(coleccionCitas, coleccionCitas.length);
+		return copiaColeccionCitas;
 	}
 
 	public Cita[] getCitas(LocalDate fecha) {
 		if (fecha == null) {
-			throw new NullPointerException("ERROR: No se pueden devolver las citas para un dÌa nulo.");
+			throw new NullPointerException("ERROR: No se pueden devolver las citas para un d√≠a nulo.");
 		}
 		Cita[] coleccionCitasFecha = new Cita[tamano];
 		int j = 0;
