@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import javax.naming.OperationNotSupportedException;
 
+//Citas
 public class Citas {
 	private int capacidad;
 	private int tamano;

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
+//Cita
 public class Cita {
 	public static final String FORMATO_FECHA_HORA = ("dd/MM/yyyy HH:mm");
 	private LocalDateTime fechaHora;

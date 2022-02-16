@@ -32,6 +32,7 @@ public class MainApp {
 		}
 	}
 
+//buscarCita
 	private static void buscarCita() {
 		try {
 			Cita cita = listaCitas.buscar(Consola.leerCita());

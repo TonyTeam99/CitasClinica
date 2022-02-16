@@ -4,6 +4,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+//Paciente
 public class Paciente {
 	private static final String ER_DNI = ("([0-9]{8})([A-Za-z])");
 	private static final String ER_TELEFONO = ("[69][0-9]{8}");

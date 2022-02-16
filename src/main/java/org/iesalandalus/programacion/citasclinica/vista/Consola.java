@@ -11,6 +11,7 @@ import org.iesalandalus.programacion.citasclinica.modelo.Cita;
 import org.iesalandalus.programacion.citasclinica.modelo.Paciente;
 import org.iesalandalus.programacion.utilidades.Entrada;
 
+//Consola
 public class Consola {
 	private Consola() {
 
